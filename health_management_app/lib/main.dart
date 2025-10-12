@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'; // <--- 1. 關鍵導入
 
 import 'screens/chat_screen.dart';
 import 'screens/dashboard_screen.dart';
@@ -6,6 +7,7 @@ import 'screens/insights_screen.dart';
 import 'screens/medication_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/records_screen.dart';
+import 'screens/login_screen.dart'; // 導入 AuthScreen
 
 void main() {
   runApp(const HealthManagementApp());
@@ -24,7 +26,23 @@ class HealthManagementApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF5F7FA),
         fontFamily: 'SF Pro Display',
       ),
-      home: const MainScreen(),
+      // ==========================================================
+      // 2. 國際化配置：解決日期選擇器錯誤的關鍵
+      // ==========================================================
+      supportedLocales: const [
+        Locale('en', ''),       // 英文
+        Locale('zh', 'TW'),     // 繁體中文 (台灣)
+      ],
+      // 移除 const 關鍵字來解決 "Not a constant expression" 錯誤
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      // ==========================================================
+      
+      // 應用程式應從登入畫面開始，而不是直接進入 MainScreen
+      home: const AuthScreen(), 
       debugShowCheckedModeBanner: false,
     );
   }

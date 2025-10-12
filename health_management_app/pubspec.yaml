@@ -9,14 +9,27 @@ environment:
   sdk: '>=3.7.0 <4.0.0'
 
 dependencies:
+  # --- 這是唯一且完整的 dependencies 區塊 ---
   flutter:
     sdk: flutter
 
+  # 國際化支援 (解決 No MaterialLocalizations found 錯誤的關鍵)
+  flutter_localizations:
+    sdk: flutter
+
   cupertino_icons: ^1.0.8
-  fl_chart: ^1.1.1
-  intl: ^0.19.0
+  
+  # 圖表
+  fl_chart: ^0.69.0
+  
+  # 日期格式化 (FIX: 移除版本號，讓系統自動選擇兼容 flutter_localizations 的版本)
+  intl:
+  
+  # 外部連結
   url_launcher: ^6.2.3
-  image_picker: ^1.0.4
+  
+  # 新增：大頭貼圖片選擇
+  image_picker: ^1.0.4 
 
 dev_dependencies:
   flutter_test:
