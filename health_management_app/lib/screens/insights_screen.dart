@@ -176,7 +176,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                       case 2: // 月：1~12月 12點
                         sysData = [125, 126, 127, 128, 129, 130, 131, 132, 131, 130, 129, 128];
                         diaData = [78, 79, 80, 81, 82, 81, 80, 81, 82, 81, 80, 79];
-                        labels = List.generate(12, (i) => '${i + 1}月');
+                        labels = List.generate(12, (i) => '${i + 1}');
                         break;
                       default:
                         sysData = [];
@@ -328,7 +328,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                         break;
                       case 2: // 月：1~12月
                         gluData = [140, 141, 143, 145, 144, 146, 147, 148, 146, 144, 143, 142];
-                        labels = List.generate(12, (i) => '${i + 1}月');
+                        labels = List.generate(12, (i) => '${i + 1}');
                         break;
                       default:
                         gluData = [];
