@@ -1,154 +1,188 @@
 import 'package:flutter/material.dart';
 
 // =================================================================
-// 隱私政策頁面 (已修改為更正式的排版)
+// PrivacyPolicyScreen Widget
+// 這是應用程式的隱私政策頁面，內容居中呈現且排版精美。
 // =================================================================
 class PrivacyPolicyScreen extends StatelessWidget {
-  const PrivacyPolicyScreen({super.key});
+  const PrivacyPolicyScreen({Key? key}) : super(key: key);
 
-  // 輔助方法：建構正式分隔線 (與服務條款頁面一致)
-  Widget _buildSeparator() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 20.0),
-      child: Divider(
-        height: 1,
-        thickness: 0.8,
-        color: Colors.black12, // 淺灰色分隔線
+  // 輔助函式：建立主要的政策標題 (如：一、引言)
+  Widget _buildPolicyHeader(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF4A90E2), // 應用程式的主題藍色
+        ),
       ),
     );
   }
 
-  // Helper function for building consistent content sections (已優化樣式)
-  Widget _buildSection({required String title, required String content}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // 使用更醒目、專業的標題樣式
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700, // 更粗的字體
-            color: Colors.black, // 保持黑色，強調正式性
-          ),
+  // 輔助函式：建立政策內容的段落
+  Widget _buildPolicyParagraph(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 14,
+          height: 1.6, // 增加行高以提升閱讀舒適度
+          color: Colors.black87,
         ),
-        const SizedBox(height: 10), // 增加間距
-        Text(
-          content,
-          // 內文使用 justify 對齊，增加行高以提高可讀性
-          textAlign: TextAlign.justify,
-          style: const TextStyle(
-            fontSize: 15.5,
-            height: 1.7, // 增加行高
-            color: Colors.black54,
+        textAlign: TextAlign.justify, // 長文本使用兩端對齊
+      ),
+    );
+  }
+
+  // 輔助函式：建立政策內容的清單項目
+  Widget _buildPolicyListItem(String text) {
+    // 移除內容中的粗體標記 (**)
+    final cleanText = text.replaceAll('**', '');
+    
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, top: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 7.0),
+            child: Icon(Icons.circle, size: 6, color: Colors.grey),
           ),
-        ),
-      ],
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              cleanText, // 使用去除星號後的文本
+              style: const TextStyle(
+                fontSize: 14,
+                height: 1.6,
+                color: Colors.black87,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // 獲取當前日期，用於政策生效日
-    final now = DateTime.now();
-    final effectiveDate = '${now.year} 年 ${now.month} 月 ${now.day} 日';
+    const String appName = '慢性病健康管理';
+    // *** 生效日期已更新為 2025 年 10 月 15 日 ***
+    const String effectiveDate = '2025 年 10 月 15 日'; 
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('隱私權政策', 
+        title: const Text('隱私權政策',
             style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0.5,
         iconTheme: const IconThemeData(color: Colors.black87),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF5F7FA), // 頁面底色
       body: SingleChildScrollView(
-        // 增加頁面邊緣填充，更像正式文件
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // 主標題 (已修改為更粗黑的樣式)
-            const Text(
-              '隱私權政策聲明',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: Colors.black),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Center( // 讓內容區塊在寬螢幕上居中
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 800), // 限制政策內容的最大寬度
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            Text(
-              '生效日期：$effectiveDate',
-              style: const TextStyle(color: Colors.grey, fontSize: 14),
-            ),
-            
-            // 簡短介紹（新增，增加正式文件感）
-            const SizedBox(height: 25),
-            const Text(
-              '本政策旨在向您說明我們如何處理您的個人資料。請仔細閱讀，您對本應用程式的使用即表示您同意本政策條款。',
-              textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: 16, height: 1.6, fontWeight: FontWeight.w500, color: Colors.black87),
-            ),
-            
-            const SizedBox(height: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // 政策頂部資訊：應用程式名稱 (置中)
+                Center( 
+                  child: Text(
+                    appName,
+                    style: const TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.w900, color: Colors.black87),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                // 生效日期 (置中)
+                Center(
+                  child: Text(
+                    '生效日期：$effectiveDate',
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ),
+                const Divider(height: 30, color: Color(0xFFE0E0E0)),
+                
+                // --- 政策內容區 ---
 
-            // 1. 政策適用範圍
-            _buildSection(
-              title: '1. 政策適用範圍',
-              content: '本隱私權政策適用於[應用程式名稱]（以下簡稱「本應用程式」或「我們」）提供的所有產品與服務。本政策旨在說明我們如何收集、使用、處理和保護您在使用我們的服務時所提供的個人資訊。若您不同意本政策條款，請立即停止使用本應用程式。',
+                // 1. 引言
+                _buildPolicyHeader('一、引言與承諾'),
+                _buildPolicyParagraph(
+                    '感謝您使用 $appName。我們致力於保護您的個人資料和隱私權。本隱私政策說明了我們如何收集、使用、披露和保護您在使用我們的行動應用程式和服務時提供給我們的信息。'),
+
+                // 2. 我們收集的資訊
+                _buildPolicyHeader('二、我們收集的資訊類型'),
+                _buildPolicyParagraph('為了向您提供服務，我們可能會收集以下幾種類型的資訊：'),
+                // 移除 **
+                _buildPolicyListItem('個人身份資訊： 您的姓名、電話號碼、電子郵件地址、年齡和性別。'),
+                _buildPolicyListItem('健康資訊： 您的身高、體重、血壓、血糖水平、慢性病史等，這些資訊是為提供健康管理服務所必需的。'),
+                _buildPolicyListItem('技術與使用資訊： 設備型號、作業系統版本、IP 地址以及您在應用程式中的活動日誌（例如功能使用頻率）。'),
+
+                // 3. 如何使用您的資訊
+                _buildPolicyHeader('三、資訊的使用目的'),
+                _buildPolicyParagraph('我們將收集到的資訊用於以下目的：'),
+                _buildPolicyListItem('提供、操作和維護我們的服務，包括個人化的健康趨勢分析。'),
+                _buildPolicyListItem('與您溝通，回應您的查詢或提供客戶支援。'),
+                _buildPolicyListItem('用於研究和分析，以改進我們的服務功能和用戶體驗。'),
+                _buildPolicyListItem('在法律要求或得到您明確同意的情況下，發送促銷或通知訊息。'),
+
+                // 4. 資訊的分享與披露
+                _buildPolicyHeader('四、資訊的分享與披露'),
+                _buildPolicyParagraph('我們僅在以下有限的情況下分享您的個人資料和健康資訊：'),
+                _buildPolicyListItem('經過您的同意： 我們會根據您的指示和同意，與您綁定的家人或其他授權方分享您的健康數據。'),
+                _buildPolicyListItem('服務供應商： 為了幫助我們運營應用程式，我們可能會與受合約約束的第三方服務供應商分享資訊，但他們僅被允許在為我們提供服務的必要範圍內使用這些資訊。'),
+                _buildPolicyListItem('法律要求： 當法律、法規或法院命令要求時，我們必須披露您的資訊。'),
+
+                // 5. 資料安全
+                _buildPolicyHeader('五、資料安全與保障'),
+                _buildPolicyParagraph(
+                    '我們採取多種安全措施來保護您的個人資料免遭未經授權的訪問、更改、披露或破壞。這包括使用加密技術、訪問控制和安全伺服器。然而，沒有任何電子傳輸或儲存方法是絕對安全的。'),
+
+                // 6. 您的權利
+                _buildPolicyHeader('六、您的隱私權利'),
+                _buildPolicyParagraph(
+                    '您有權訪問、更正、更新或要求刪除您的個人資料。您可以通過應用程式內的設定或聯繫我們的支援團隊來行使這些權利。'),
+
+                // 7. 政策變更
+                _buildPolicyHeader('七、本政策的變更'),
+                _buildPolicyParagraph(
+                    '我們可能會不時更新本隱私政策。所有變更將在本頁面上公佈，並在新的生效日期生效。重大變更將通過應用程式通知或電子郵件方式通知您。'),
+
+                // 8. 聯繫我們
+                _buildPolicyHeader('八、聯繫我們'),
+                _buildPolicyParagraph('如果您對本隱私政策有任何疑問或疑慮，請通過以下方式聯繫我們：'),
+                _buildPolicyListItem('電子郵件：support@healthtechsolutions.com'),
+                _buildPolicyListItem('服務熱線：(02) 1234-5678'),
+
+                const SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    '感謝您的信任與支持。',
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                ),
+              ],
             ),
-            
-            _buildSeparator(),
-            // 2. 資訊之收集
-            _buildSection(
-              title: '2. 資訊之收集',
-              content: '我們主要收集以下兩類資訊：\n\n'
-                  '2.1 **您直接提供的資訊：** 包括但不限於註冊或登入時的電子郵件地址、用戶名稱、密碼（加密後）、以及為使用特定功能而自願提供的個人資料。\n\n'
-                  '2.2 **自動收集的資訊：** 當您存取和使用本應用程式時，我們會自動收集某些資訊，例如您的設備型號、操作系統版本、IP 地址、使用時間、應用程式活動日誌、以及服務錯誤報告。此類資訊用於服務分析與優化。',
-            ),
-            
-            _buildSeparator(),
-            // 3. 資訊使用目的
-            _buildSection(
-              title: '3. 資訊使用目的',
-              content: '我們將收集到的資訊用於以下目的：\n\n'
-                  '3.1 **提供和維護服務：** 確保應用程式功能的正常運作，執行必要的更新與維護。\n'
-                  '3.2 **服務優化與開發：** 分析用戶行為，以改善現有功能，並開發新的產品或服務。\n'
-                  '3.3 **安全性與合規性：** 偵測、預防和解決技術問題或欺詐行為，並遵守所有適用的法律、法規及要求。',
-            ),
-            
-            _buildSeparator(),
-            // 4. 資訊的共享與揭露
-            _buildSection(
-              title: '4. 資訊的共享與揭露',
-              content: '我們承諾不會將您的個人資訊出售、租賃或交換給任何非關聯的第三方。在以下例外情況下，我們可能會共享或揭露您的資訊：\n\n'
-                  '4.1 **徵得您的同意：** 在取得您明確授權的情況下。\n'
-                  '4.2 **合作夥伴或服務供應商：** 基於提供服務的必要性（例如雲端儲存、數據分析），我們可能與簽訂嚴格保密協議的第三方服務供應商共享資訊。\n'
-                  '4.3 **法律要求：** 當我們收到法院傳票、法律命令或政府機構的合法要求時，為遵守法律程序或保護我們的權利和財產。',
-            ),
-            
-            _buildSeparator(),
-            // 5. 資料安全措施
-            _buildSection(
-              title: '5. 資料安全措施',
-              content: '我們採取合理的、業界標準的安全措施來保護您的個人資料，防止未經授權的存取、變更、揭露或銷毀。這些措施包括使用 SSL/TLS 加密技術進行數據傳輸，以及在儲存資料時進行加密處理。儘管如此，互聯網上的數據傳輸或電子儲存方式無法保證 \$100% 絕對安全。',
-            ),
-            
-            _buildSeparator(),
-            // 6. 政策修訂與聯繫方式
-            _buildSection(
-              title: '6. 政策修訂與聯繫方式',
-              content: '6.1 **政策變更：** 我們保留隨時修訂本隱私權政策的權利。任何變更將透過在應用程式內發布新政策或發送電子郵件通知的方式生效。建議您定期審閱本政策。\n\n'
-                  '6.2 **聯繫我們：** 如果您對本隱私權政策有任何疑問或疑慮，請透過以下方式與我們聯繫：\n'
-                  '   電子郵件：[您的聯絡信箱]\n'
-                  '   通訊地址：[您的公司/開發者地址]',
-            ),
-            
-            const SizedBox(height: 30),
-            
-            const Text(
-              '感謝您閱讀我們的隱私權政策。',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-            const SizedBox(height: 10),
-          ],
+          ),
         ),
       ),
     );
