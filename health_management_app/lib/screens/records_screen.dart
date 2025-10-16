@@ -68,7 +68,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
       emoji: '🍽️',
       category: '飲食',
       title: '飲食紀錄',
-      value: '大麥克550大卡',
+      value: '大麥克550 kcal',
       time: '昨天 18:00',
       isWarning: true,
     ),
@@ -111,6 +111,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
         return {'value': '70', 'unit': 'kg'};
       case '睡眠':
         return {'value': '8', 'unit': '小時'};
+      case '飲食':
+        return {'value': '大麥克', 'unit': '700kcal'};
       default:
         return {'value': '', 'unit': ''};
     }
@@ -400,14 +402,6 @@ class _RecordsScreenState extends State<RecordsScreen> {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.camera_alt_rounded,
-                          size: 28,
-                          color: Color(0xFF4A90E2),
-                        ),
-                        onPressed: () {},
-                      ),
                       if (selectedCategory != '全部')
                         IconButton(
                           icon: const Icon(
