@@ -64,6 +64,14 @@ class _RecordsScreenState extends State<RecordsScreen> {
       time: '昨天 23:00',
       isWarning: false,
     ),
+    Record(
+      emoji: '🍽️',
+      category: '飲食',
+      title: '飲食紀錄',
+      value: '大麥克550大卡',
+      time: '昨天 18:00',
+      isWarning: true,
+    ),
   ];
 
   void _selectCategory(String category) {
@@ -118,6 +126,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
         return '⚖️';
       case '睡眠':
         return '🛌';
+      case '飲食':
+        return '🍽️';
       default:
         return '📋';
     }
@@ -427,6 +437,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
                     _buildCategoryChip('體重', selectedCategory == '體重'),
                     const SizedBox(width: 10),
                     _buildCategoryChip('睡眠', selectedCategory == '睡眠'),
+                    const SizedBox(width: 10),
+                    _buildCategoryChip('飲食', selectedCategory == '飲食'),
                   ],
                 ),
               ),
